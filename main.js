@@ -78,6 +78,13 @@ static idIncremento = 0;
                 codigo: codigo,
                 stock: stock,
             } 
+
+            const productoValidar = Object.values(nuevoProducto);
+            const validarValores = productoValidar.filter( e=> e !== undefined);
+            if(validarValores.length < 7){
+              console.log('faltan parametros');
+              return;
+            }
           if(code){
             console.error('ya existe este codigo');
             return;
