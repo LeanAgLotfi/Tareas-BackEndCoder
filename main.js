@@ -82,7 +82,7 @@ static idIncremento = 0;
             const productoValidar = Object.values(nuevoProducto);
             const validarValores = productoValidar.filter( e=> e !== undefined);
             if(validarValores.length < 7){
-              console.log('faltan parametros');
+              console.error('faltan parametros');
               return;
             }
           if(code){
