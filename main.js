@@ -113,3 +113,11 @@ console.log(myProductManager.addProducts('producto prueba', 'Este es un producto
 console.log(myProductManager.addProducts( 'Este es un producto prueba', 200, 'Sin imagen', 'abc1234', 25));
 console.log(myProductManager.getProducts());
 console.log(myProductManager.getProductsById(1));
+
+
+const fs = require('fs/promises')
+const { existsSync } = require('fs');
+
+class ProductManagerClase2{
+
+}
