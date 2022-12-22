@@ -115,9 +115,3 @@ console.log(myProductManager.getProducts());
 console.log(myProductManager.getProductsById(1));
 
 
-const fs = require('fs/promises')
-const { existsSync } = require('fs');
-
-class ProductManagerClase2{
-
-}

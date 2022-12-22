@@ -1,6 +1,7 @@
 const fs = require('fs/promises')
 const { existsSync } = require('fs');
 
+
 class ProductManager{
 
     constructor(path){
@@ -51,7 +52,7 @@ async getProduct(){
 
 async getProductById(id) {
     try{
-        const productoSalvado = await this.getProducts();
+        const productoSalvado = await this.getProduct();
         const productoSeleccionado = productoSalvado.find(prod => prod.id === id)
         if(!productoSeleccionado){
           console.error('No se encontro el id del producto');
@@ -65,7 +66,7 @@ async getProductById(id) {
 
 async updateProduct(id, product) {
     try{
-        const productoGuardado = await this.getProducts()
+        const productoGuardado = await this.getProduct()
         const productoSeleccionado = await this.getProductById(id)
         if(productoSeleccionado){
             const productoActualizado = {...productoSeleccionado, ...product}
@@ -88,7 +89,7 @@ async updateProduct(id, product) {
 
 async deleteProduct(id) {
     try{
-        const productoGuardado = await this.getProducts();
+        const productoGuardado = await this.getProduct();
         const productoSeleccionado = await this.getProductById(id)
         const productoFiltrado = productoGuardado.filter(prod => prod.id !== id)
         if(!productoSeleccionado){
@@ -106,3 +107,5 @@ async deleteProduct(id) {
 }
 
 }
+
+module.exports = ProductManager;

@@ -1,0 +1,23 @@
+{
+  "name": "javascript-tareas",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/LeanAgLotfi/Tareas-BackEndCoder.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/LeanAgLotfi/Tareas-BackEndCoder/issues"
+  },
+  "homepage": "https://github.com/LeanAgLotfi/Tareas-BackEndCoder#readme",
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}
