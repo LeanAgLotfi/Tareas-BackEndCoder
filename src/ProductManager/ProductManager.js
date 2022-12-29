@@ -108,4 +108,4 @@ async deleteProduct(id) {
 
 }
 
-module.export = ProductManager;
+module.exports = ProductManager;

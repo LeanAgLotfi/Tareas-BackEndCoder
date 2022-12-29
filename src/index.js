@@ -1,6 +1,6 @@
 const express = require('express');
 const app = express();
-const apiRoutes = require('./src/routes/Router');
+const apiRoutes = require('./routes/Router');
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));

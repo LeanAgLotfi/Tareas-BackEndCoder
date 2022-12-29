@@ -63,4 +63,4 @@ router.delete('/:pid', async (req, res) => {
     res.send({ status: status, message: cartDelete })
 });
 
-module.export = router;
+module.exports = router;

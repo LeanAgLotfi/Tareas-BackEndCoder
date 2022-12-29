@@ -141,4 +141,4 @@ class CartManager {
     }
 }
 
-module.export = CartManager;
+module.exports = CartManager;

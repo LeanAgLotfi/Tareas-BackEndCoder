@@ -20,7 +20,7 @@ const router = Router();
     } else {
       res.json({
         status: "succes",
-        data: await prod.addProducto(product),
+        data: await productManager.addProducto(product),
       });
     }
   });
@@ -91,4 +91,4 @@ router.get("/", async (req, res) => {
     }
   });
 
-  module.export = router;
+  module.exports = router;
