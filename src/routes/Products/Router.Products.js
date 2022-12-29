@@ -1,4 +1,4 @@
-const {Router} = require('express');
+const { Router } = require('express');
 const router = Router();
 const productManager = require('./src/ProductManager/ProductManager');
 const productos = require('./data/products.json');
@@ -89,3 +89,5 @@ router.get("/", async (req, res) => {
       });
     }
   });
+
+  module.export = router;

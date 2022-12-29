@@ -106,57 +106,6 @@ async deleteProduct(id) {
     }
 }
 
-//Carrito
-
-async createCart() {
-    let cart = await this.getProduct();
-    const newCart = { id: cart.length + 1, products: [] };
-    cart.push(newCart);
-    await this.addProducto(cart);
-    return cart;
-  }
-
-  async addToCart(cid, pid) {
-    let cart = await this.getProduct();
-    const order = cart.find((o) => o.orderId === cid);
-
-    if (order) {
-      const productExist = order.products.find((prod) => prod.prodId === pid);
-
-      if (productExist) {
-        const orderPosition = cart.findIndex((order) => order.orderId === cid);
-        const updateProduct = cart[orderPosition].products.find(
-          (prod) => prod.prodId === pid
-        );
-        const productPosition = cart[orderPosition].products.findIndex(
-          (prod) => prod.prodId === pid
-        );
-
-        cart[orderPosition].products[productPosition].quantity =
-          updateProduct.quantity + 1;
-        await this.addProducto(cart);
-        return cart;
-
-      } else {
-        const newProduct = { prodId: pid, quantity: 1 };
-        const orderPosition = cart.findIndex((order) => order.orderId === cid);
-        if (orderPosition <= 0) {
-          cart[orderPosition].products.push(newProduct);
-          await this.addProducto(cart);
-          return cart;
-        }
-      }
-    } else {
-      const newOrder = {
-        orderId: cart.length + 1,
-        products: [{ prodId: pid, quantity: 1 }],
-      };
-      cart.push(newOrder);
-      await this.addProducto(cart);
-      return cart;
-    }
-  }
-
 }
 
-module.exports = ProductManager;
+module.export = ProductManager;
