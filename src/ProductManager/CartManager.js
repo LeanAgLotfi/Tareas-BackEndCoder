@@ -1,8 +1,5 @@
 const fs = require('fs/promises')
 const { existsSync, readFile } = require('fs');
-const productManager = require('./src/ProductManager/ProductManager');
-const productos = require('./data/products.json');
-const prod = new productManager(productos);
 
 class CartManager {
     constructor(path) {

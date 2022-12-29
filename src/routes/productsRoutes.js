@@ -1,41 +1,10 @@
 const { Router } = require('express');
+const ProductManager = require('../ProductManager/ProductManager');
+const producto = require('../data/products.json');
+let productManager = new ProductManager(producto);
 const router = Router();
-const productManager = require('./src/ProductManager/ProductManager');
-const productos = require('./data/products.json');
-const prod = new productManager(productos);
 
-router.get("/", async (req, res) => {
-    const products = await prod.getItems();
-    const limit = Number(req.query.limit);
-  
-    if (isNaN(limit)) {
-      res.status(400).send("el parametro debe ser un numero");
-    } else {
-      
-        if(limit) {
-            const limitProducts = products.slice(0, limit);
-        res.json({
-            status: "success",
-            data: limitProducts,
-            });
-        }else{
-            res.send({productos});
-        }
-    }
-  });
-
-
-  router.get('/:pid', async (req, res)=>{
-    console.log(req.params);
-    const prodId = req.params.pid;
-    const id = productos.find(prod => prod.id === +prodId);
-    if (!id) {
-      return res.status(404).send("Product not found");
-    }
-    res.send({id});
-});
-
-
+//crear producto
   router.post("/", async (req, res) => {
     const product = req.body;
     if (
@@ -56,11 +25,41 @@ router.get("/", async (req, res) => {
     }
   });
 
+//pedir todos los productos
+router.get("/", async (req, res) => {
+    const products = await productManager.getProduct();
+    const limit = Number(req.query.limit);
+  
+    if (isNaN(limit)) {
+      res.status(400).send("el parametro debe ser un numero");
+    } else {
+      
+        if(limit) {
+            const limitProducts = products.slice(0, limit);
+        res.json({
+            status: "success",
+            data: limitProducts,
+            });
+        }else{
+            res.send({products});
+        }
+    }
+  });
+
+  //pedir un producto
+  router.get('/:pid', async (req, res) => {
+    let pid = +req.params.pid;
+    let product = await productManager.getProductById(pid)
+    let status = product.id > 0 ? "success" : "error";
+    res.send({ status: status, payload: product })
+});
+
+//actualizar
   router.put("/:pid", async (req, res) => {
     const pid = Number(req.params.pid);
     const fieldsToUpdate = req.body;
     const foundId = fieldsToUpdate.hasOwnProperty("id");
-    const data = await prod.updateProduct(pid, fieldsToUpdate)
+    const data = await productManager.updateProduct(pid, fieldsToUpdate)
     console.log(data)
   
     if (foundId) {
@@ -77,6 +76,8 @@ router.get("/", async (req, res) => {
     }
   });
 
+
+  //borrar
   router.delete("/:pid", async (req, res) => {
     const pid = Number(req.params.pid);
   
@@ -85,7 +86,7 @@ router.get("/", async (req, res) => {
     } else {
       res.json({
         status: "succes",
-        data: await prod.deleteProduct(pid),
+        data: await productManager.deleteProduct(pid),
       });
     }
   });
