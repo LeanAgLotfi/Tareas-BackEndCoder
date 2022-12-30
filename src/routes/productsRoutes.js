@@ -4,6 +4,26 @@ const producto = require('../data/products.json');
 let productManager = new ProductManager(producto);
 const router = Router();
 
+//pedir todos los productos
+router.get("/", async (req, res) => {
+    const products = await productManager.getProduct();
+    const limit = Number(req.query.limit);
+  
+    if (isNaN(limit)) {
+      res.status(400).send("el parametro debe ser un numero");
+    } else {
+      
+        if(limit) {
+            const limitProducts = products.slice(0, limit);
+        res.json({
+            status: "success",
+            data: limitProducts,
+            });
+        }else{
+            res.send({products});
+        }
+    }
+  });
 //crear producto
   router.post("/", async (req, res) => {
     const product = req.body;
@@ -25,26 +45,7 @@ const router = Router();
     }
   });
 
-//pedir todos los productos
-router.get("/", async (req, res) => {
-    const products = await productManager.getProduct();
-    const limit = Number(req.query.limit);
-  
-    if (isNaN(limit)) {
-      res.status(400).send("el parametro debe ser un numero");
-    } else {
-      
-        if(limit) {
-            const limitProducts = products.slice(0, limit);
-        res.json({
-            status: "success",
-            data: limitProducts,
-            });
-        }else{
-            res.send({products});
-        }
-    }
-  });
+
 
   //pedir un producto
   router.get('/:pid', async (req, res) => {
