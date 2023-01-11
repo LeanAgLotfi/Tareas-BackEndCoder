@@ -1,0 +1,13 @@
+.formularioContenedor{
+    display: flex;
+    flex-direction: column;
+    width: 20rem;
+    background-color: #66ec9e;
+    margin: 2rem auto;
+    padding: 1rem;
+    border-radius: 0.5rem;
+}
+
+.formularioContenedor input{
+    margin: 0.3rem 0.5rem;
+}

@@ -1,0 +1,21 @@
+<div class="container">
+         <table>
+        <thead>
+          <tr>
+              <th>Item Id</th>
+              <th>Item Name</th>
+              <th>Item Price</th>
+          </tr>
+        </thead>
+
+        <tbody>
+            {{#each list}}
+          <tr>
+            <td>{{id}}</td>
+            <td>{{title}}</td>
+            <td>${{price}}</td>
+          </tr>
+          {{/each}}
+        </tbody>
+      </table>
+</div>

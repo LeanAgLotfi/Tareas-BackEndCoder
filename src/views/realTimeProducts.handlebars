@@ -1,0 +1,41 @@
+<div class="container">
+    <h1> Lista de productos actualizable</h1>
+    <div id="productosContenedor">
+         <table>
+        <thead>
+          <tr>
+              <th>Item Id</th>
+              <th>Item Name</th>
+              <th>Item Price</th>
+          </tr>
+        </thead>
+
+        <tbody>
+            {{#each list}}
+          <tr>
+            <td>{{id}}</td>
+            <td>{{title}}</td>
+            <td>${{price}}</td>
+          </tr>
+          {{/each}}
+        </tbody>
+      </table>
+    </div>
+        
+
+    <form action="/realtimeproducts" id="agregar-al-form" class="formularioContenedor" method="post" enctype="multipart/form-data">
+        <h2>Agregar Producto</h2>
+        <input type="text" placeholder="title" name="title">
+        <input type="text" placeholder="description" name="description" required>
+        <input type="text" placeholder="code" name="code" required>
+        <input type="number" placeholder="price" name="price" required>
+        <input type="number" placeholder="stock" name="stock" required>
+        <input type="text" placeholder="category" name="category" required>
+        <input type="file" name="files" multiple>
+        <label for="input-status"><input type="checkbox" name="status" id="input-status">Available</label>
+        <input type="submit" value="Send">
+    </form>
+
+</div>
+<script src="/socket.io/socket.io.js"></script>
+<script src="/src/public/script.js"></script>
