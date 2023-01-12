@@ -11,9 +11,9 @@
         <tbody>
             {{#each products}}
           <tr>
-            <td>{{id}}</td>
-            <td>{{title}}</td>
-            <td>${{price}}</td>
+            <td>{{this.id}}</td>
+            <td>{{this.title}}</td>
+            <td>${{this.price}}</td>
           </tr>
           {{/each}}
         </tbody>

@@ -6,36 +6,19 @@ let productManager = new ProductManager(producto);
 const router = Router();
 
 //home
-router.get('/', async (res,req)=>{
+router.get('/', async (req,res)=>{
     const products = await productManager.getProduct();
-    
-    const limit = Number(req.query.limit)
-    if(!limit){
-        return res.render('home',{
-            products: products
-        })
-    }
-
-    const limitedProducts = products.slice(0,limit)
-    res.render('home',{
-        products: limitedProducts
+    return res.render('home',{
+        products: products
     })
-    
 });
 
 
 //real time prod
 router.get('/realtimeproducts', async (req, res)=>{
     const products = await productManager.getProduct()
-    const limit = req.query.limit
-    if(!limit){
-        return res.render('realTimeProducts',{
-            products: products
-        })
-    }
-    const limitedProducts = products.slice(0,limit)
-    res.render('realTimeProducts',{
-        products: limitedProducts
+   res.render('realTimeProducts',{
+    products: products
     })
 })
 

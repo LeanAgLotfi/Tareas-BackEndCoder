@@ -9,13 +9,13 @@ const app = express();
 
 //Template
 app.engine('handlebars', handlebars.engine())
-app.set('views', __dirname + '/views')
+app.set('views', __dirname + 'src/views')
 app.set('view engine', 'handlebars')
 
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use('/statics', express.static(path.resolve(__dirname, './public')))
+app.use('/statics', express.static(path.resolve(__dirname, 'src/public')))
 app.use("/api", apiRoutes);
 app.use('/', viewsRoutes);
 
@@ -26,8 +26,7 @@ const httpServer = app.listen(PORT, () => {
 const socketServer = new Server(httpServer);
 
 socketServer.on('connection', (socket)=>{
-    console.log('Nuevo cliente conectado')
-    app.set('socket', socket)
+    console.log('Nuevo cliente conectado');
 })
 
 
