@@ -1,11 +1,11 @@
 const express = require('express');
-const app = express();
 const handlebars = require('express-handlebars');
 const path = require('path');
-const { Server } = require('socket.io');
 const apiRoutes = require('./routes/Router');
 const viewsRoutes = require('./routes/realTimeProducts');
+const { Server } = require('socket.io');
 const PORT = 8080;
+const app = express();
 
 //Template
 app.engine('handlebars', handlebars.engine())
@@ -15,7 +15,7 @@ app.set('view engine', 'handlebars')
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use('/statics', express.static(path.resolve(__dirname, '../public')))
+app.use('/statics', express.static(path.resolve(__dirname, './public')))
 app.use("/api", apiRoutes);
 app.use('/', viewsRoutes);
 

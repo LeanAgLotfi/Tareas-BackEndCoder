@@ -1,50 +1,50 @@
-// const socket = io();
+const socket = io();
 
-// const form = document.getElementById('agregar-al-form')
-// const productListContainer = document.getElementById('productosContenedor')
+const form = document.getElementById('agregar-al-form')
+const productListContainer = document.getElementById('productosContenedor')
 
-// form.addEventListener('submit', event => {
-//     event.preventDefault()
-//     const formData = new FormData(form)
-//     const requestOptions = {
-//         method: 'POST',
-//         body: formData,
-//         redirect: 'manual'
-//     }
+form.addEventListener('submit', event => {
+    event.preventDefault()
+    const formData = new FormData(form)
+    const requestOptions = {
+        method: 'POST',
+        body: formData,
+        redirect: 'manual'
+    }
 
-//     fetch('http://localhost:8080/realtimeproducts',requestOptions)
-//     .then(response => response.json())
-//     .then(result => console.log(result))
-//     .catch(error => console.log(error))
+    fetch('http://localhost:8080/realtimeproducts',requestOptions)
+    .then(response => response.json())
+    .then(result => console.log(result))
+    .catch(error => console.log(error))
 
-//     form.reset()
-// })
+    form.reset()
+})
 
-// socket.on('getProducts', data => {
-//     console.log('probando 123' + data);
-// })
+socket.on('getProducts', data => {
+    console.log('prueba' + data);
+})
 
-// socket.on('newProduct', data => {
-//     const newProductFragment = document.createElement('div')
-//     if(!data.thumbnails.length){
-//         newProductFragment.innerHTML = `
-//         <div>
-//             <tr>
-//             <td>${data.id}</td>
-//             <td>${data.title}</td>
-//             <td>${data.price}</td>
-//             </tr>
-//         </div>`
-//     }else{
-//         newProductFragment.innerHTML = `
-//         <div id="product-item">
-//         <tr>
-//             <td>${data.id}</td>
-//             <td>${data.title}</td>
-//             <td>${data.price}</td>
-//         </tr>
-//         </div>`
-//     }
+socket.on('newProduct', data => {
+    const newProductFragment = document.createElement('div')
+    if(!data.thumbnails.length){
+        newProductFragment.innerHTML = `
+        <div>
+            <tr>
+            <td>${data.id}</td>
+            <td>${data.title}</td>
+            <td>${data.price}</td>
+            </tr>
+        </div>`
+    }else{
+        newProductFragment.innerHTML = `
+        <div>
+        <tr>
+            <td>${data.id}</td>
+            <td>${data.title}</td>
+            <td>${data.price}</td>
+        </tr>
+        </div>`
+    }
     
-//     productListContainer.append(newProductFragment)
-// })
+    productListContainer.append(newProductFragment)
+})
