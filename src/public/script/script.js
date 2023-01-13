@@ -33,6 +33,7 @@ socket.on('newProduct', data => {
             <td>${data.id}</td>
             <td>${data.title}</td>
             <td>${data.price}</td>
+            <td>${data.descripcion}</td>
             </tr>
         </div>`
     }else{
@@ -42,6 +43,7 @@ socket.on('newProduct', data => {
             <td>${data.id}</td>
             <td>${data.title}</td>
             <td>${data.price}</td>
+            <td>${data.descripcion}</td>
         </tr>
         </div>`
     }
