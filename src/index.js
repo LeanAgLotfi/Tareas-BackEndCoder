@@ -7,15 +7,18 @@ const { Server } = require('socket.io');
 const PORT = 8080;
 const app = express();
 
-//Template
-app.engine('handlebars', handlebars.engine())
-app.set('views', __dirname + 'src/views')
-app.set('view engine', 'handlebars')
 
-
+//middlewares
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use('/statics', express.static(path.resolve(__dirname, 'src/public')))
+app.use('/statics', express.static(path.resolve(__dirname, '/public')))
+
+//Template
+app.engine('handlebars', handlebars.engine())
+app.set('views', __dirname + '/views')
+app.set('view engine', 'handlebars')
+
+//routes
 app.use("/api", apiRoutes);
 app.use('/', viewsRoutes);
 

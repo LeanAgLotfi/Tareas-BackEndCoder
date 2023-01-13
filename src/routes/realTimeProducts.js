@@ -5,45 +5,42 @@ const producto = require('../data/products.json');
 let productManager = new ProductManager(producto);
 const router = Router();
 
-//home
-router.get('/', async (req,res)=>{
-    const products = await productManager.getProduct();
-    return res.render('home',{
-        products: products
-    })
+//real time products simple
+
+router.get('/realtimeproducts', async (req, res)=>{
+    const data = {
+        producto: producto,
+        title: 'Prodcutos en tiempo real simple'
+    }
+    res.render('realTimeProducts', data)
 });
 
-
-//real time prod
-router.get('/realtimeproducts', async (req, res)=>{
-    const products = await productManager.getProduct()
-   res.render('realTimeProducts',{
-    products: products
-    })
-})
-
-
-router.post('/realtimeproducts', uploader.array('files'), async (req, res)=>{
+router.post('/realtimeproducts',(req, res)=>{
     const newProduct = req.body
-    const socket = req.app.get('socket')
     if(!newProduct){
         return res.status(400).send({
             error: 'No cargo el producto'
         })
     }
-    if(req.files){
-        const paths = req.files.map(file => {
-            return {
-             path: file.path,
-             originalName: file.originalname    
-            }
-        })
-        newProduct.thumbnails = paths
+    const data = {
+        producto: producto,
+        title: 'Productos en tiempo real'
     }
-    socket.emit('newProduct', newProduct)
-    res.send({
-        status: 'success'
-    })
-})
+    const prod = {
+        ...req.body
+    }
+    producto.push(prod)
+    res.render('realTimeProducts', data)
+});
+
+//home
+router.get('/home', (req,res)=>{
+    const data = {
+        producto: producto,
+        title: 'Este es el index'
+    }
+    return res.render('home', data)
+});
+
 
 module.exports = router;

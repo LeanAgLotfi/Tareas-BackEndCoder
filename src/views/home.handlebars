@@ -5,15 +5,17 @@
               <th>Item Id</th>
               <th>Item Name</th>
               <th>Item Price</th>
+              <th>Item descripcion</th>
           </tr>
         </thead>
 
         <tbody>
-            {{#each products}}
+            {{#each producto}}
           <tr>
-            <td>{{this.id}}</td>
-            <td>{{this.title}}</td>
-            <td>${{this.price}}</td>
+            <td>{{id}}</td>
+            <td>{{title}}</td>
+            <td>${{price}}</td>
+            <td>{{descripcion}}</td>
           </tr>
           {{/each}}
         </tbody>

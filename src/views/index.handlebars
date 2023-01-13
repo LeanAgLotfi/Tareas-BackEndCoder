@@ -1,0 +1,37 @@
+<div class="container">
+    <h1>Hola a todos desde Index</h1>
+       <table>
+        <thead>
+          <tr>
+              <th>Item Id</th>
+              <th>Item Name</th>
+              <th>Item Price</th>
+              <th>Item descripcion</th>
+          </tr>
+        </thead>
+
+        <tbody>
+            {{#each producto}}
+          <tr>
+            <td>{{id}}</td>
+            <td>{{title}}</td>
+            <td>${{price}}</td>
+            <td>{{descripcion}}</td>
+          </tr>
+          {{/each}}
+        </tbody>
+      </table>
+
+<h2>Agregar Producto</h2>
+ <form action="/index" method="post">
+        <input type="text" placeholder="title" name="title" >
+        <input type="text" placeholder="descripcion" name="description">
+        <input type="number" placeholder="price" name="price">
+        <input type="text" placeholder="id" name="id">
+        <br>
+        <input type="submit" value="Send">
+    </form>
+
+</div>
+<script src="/socket.io/socket.io.js"></script>
+<script src="/src/public/script/script.js"></script>
