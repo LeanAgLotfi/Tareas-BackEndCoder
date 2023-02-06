@@ -20,7 +20,7 @@ require('./config/dbConfig');
 //middlewares
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use('/statics', express.static(path.resolve(__dirname + '../public')))
+app.use('/statics', express.static(path.resolve(__dirname, '../public')))
 
 //Template
 app.engine('handlebars', handlebars.engine())
