@@ -1,95 +1,113 @@
-const { Router } = require('express');
-const ProductManager = require('../ProductManager/ProductManager');
-const producto = require('../data/products.json');
-let productManager = new ProductManager(producto);
-const router = Router();
+const { Router } = require('express')
+const uploader = require('../../utils')
+const ProductManager = require('../dao/ProductManager/ProductManager')
+const ProductManagerMongo = require('../dao/MongoManagers/ProductsMongo')
+const options = require('../config/options')
 
-//pedir todos los productos
-router.get("/", async (req, res) => {
-    const products = await productManager.getProduct();
-    const limit = Number(req.query.limit);
-  
-    if (isNaN(limit)) {
-      res.status(400).send("el parametro debe ser un numero");
-    } else {
-      
-        if(limit) {
-            const limitProducts = products.slice(0, limit);
-        res.json({
-            status: "success",
-            data: limitProducts,
-            });
+const router = Router()
+
+const productService = new ProductManager(options.fileSystem.productsFileName)
+const productMongoService = new ProductManagerMongo()
+
+router.get('/', async (req, res)=>{
+    try {
+        const products = await productMongoService.getProducts(req.query)
+        return res.send({
+            status: 'success',
+            payload: products.docs,
+            totalPages: products.totalPages,
+            prevPage: products.prevPage,
+            nextPage: products.nextPage,
+            page: products.page,
+            hasPrevPage: products.hasPrevPage,
+            hasNextPage: products.hasNextPage,
+            prevLink: null,
+            nexLink: null})
+    } catch (error) {
+        res.status(500).send({
+            status: "error",
+            error: error.message
+        })
+    }
+})
+
+router.get('/:pid', async (req, res)=>{
+    const id = req.params.pid
+    try {
+        const product = await productMongoService.getProductById(id)
+        res.send({product})
+        
+    } catch (error) {
+        res.status(500).send({
+            status: "error",
+            error: error.message
+        })
+    }
+})
+
+router.post('/', uploader.array('files'), async (req, res) =>{
+    try {
+        const newProduct = req.body
+        if(req.files){
+            const paths = req.files.map(file => {
+                return {path: file.path,
+                 originalName: file.originalname  
+                }  
+                })
+            newProduct.thumbnails = paths
         }else{
-            res.send({products});
+            newProduct.thumbnails = []
         }
+        if(!Object.keys(newProduct).length){
+            throw new Error('Error: Missing product')
+        }
+        const addProduct = await productMongoService.addProduct(newProduct)
+        res.send({
+            status: 'success',
+            added: addProduct
+        })
+    } catch (error) {
+        res.status(500).send({
+            status: "error",
+            error: error.message
+        })
     }
-  });
-//crear producto
-  router.post("/", async (req, res) => {
-    const product = req.body;
-    if (
-      !product.title ||
-      !product.description ||
-      !product.price ||
-      !product.code ||
-      !product.status ||
-      !product.category ||
-      !product.thumbnails
-    ) {
-      res.status(400).send("Faltan completar campos");
-    } else {
-      res.json({
-        status: "succes",
-        data: await productManager.addProducto(product),
-      });
+})
+
+router.put('/:pid', async(req, res)=>{
+    const productId = req.params.pid
+    try {
+        if(req.body.id){
+            throw new Error("No id must be provided")
+        }
+        const updateProduct = await productMongoService.updateProduct(productId, req.body)
+        res.send({
+            status: 'success',
+            newProduct: updateProduct
+        })
+    } catch (error) {
+        res.status(500).send({
+            status: "error",
+            error: error.message
+        })
     }
-  });
 
+})
 
-
-  //pedir un producto
-  router.get('/:pid', async (req, res) => {
-    let pid = +req.params.pid;
-    let product = await productManager.getProductById(pid)
-    let status = product.id > 0 ? "success" : "error";
-    res.send({ status: status, payload: product })
-});
-
-//actualizar
-  router.put("/:pid", async (req, res) => {
-    const pid = Number(req.params.pid);
-    const fieldsToUpdate = req.body;
-    const foundId = fieldsToUpdate.hasOwnProperty("id");
-    const data = await productManager.updateProduct(pid, fieldsToUpdate)
-    console.log(data)
-  
-    if (foundId) {
-      res.status(400).send("no se puede modificar el id");
-    } else {
-      if(data){
-        res.json({
-          status: "succes",
-          data: data
-        });
-      } else {
-        res.status(400).send("Product Not Found")
-      }
+router.delete('/:pid', async(req, res)=>{
+    const productId = req.params.pid
+    try {
+        const deleteProduct = await productMongoService.deleteProduct(productId)
+        res.send({
+            status: 'success',
+            deletedProduct: deleteProduct
+        })
+    } catch (error) {
+        res.status(500).send({
+            status: "error",
+            error: error.message
+        })
     }
-  });
+})
 
-
-  //borrar
-  router.delete("/:pid", async (req, res) => {
-    const pid = Number(req.params.pid);
-  
-    if (isNaN(pid)) {
-      res.status(400).send("Debes pasar un Numero");
-    } else {
-      res.json({
-        status: "succes",
-        data: await productManager.deleteProduct(pid),
-      });
-    }
-  });
-
-  module.exports = router;
+module.exports = router

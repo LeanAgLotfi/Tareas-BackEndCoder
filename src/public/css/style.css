@@ -21,3 +21,9 @@ body{
 .formularioContenedor input{
     margin: 0.3rem 0.5rem;
 }
+
+/* NAV BAR*/
+#nav-lista{
+ color: red;
+}
+

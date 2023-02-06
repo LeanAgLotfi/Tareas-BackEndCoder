@@ -1,6 +1,6 @@
 const { Router } = require('express');
-const uploader = require('../utils');
-const ProductManager = require('../ProductManager/ProductManager');
+const uploader = require('../../utils');
+const ProductManager = require('../dao/ProductManager/ProductManager');
 const producto = require('../data/products.json');
 let productManager = new ProductManager(producto);
 const router = Router();
