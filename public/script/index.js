@@ -13,13 +13,38 @@ const addToCart = async (event) =>{
     fetch(`/api/cart/${currentCart}/product/${productId}`, {
         method: 'POST'
     })
-    .then(alert('Bebida agregada al carrito'))
-}
+    .then(Toastify({
 
+        text: "Agregado al carrito!!",
+        
+        duration: 6000,
+        offset: {
+            x: 0, // horizontal axis - can be a number or a string indicating unity. eg: '2em'
+            y: 70 // vertical axis - can be a number or a string indicating unity. eg: '2em'
+          },
+        position: "rigth",
+        style: {
+            background: "linear-gradient(to right, #25EA7C, #6DEA25)",
+          }
+        }).showToast()
+        )
+}
 
 const seeCart = async (event) =>{
     if(!currentCart){
-        return alert('carrito vacio')
+        return Toastify({
+
+            text: "El carrito esta vacio",
+            
+            duration: 6000,
+            offset: {
+                x: 0, // horizontal axis - can be a number or a string indicating unity. eg: '2em'
+                y: 70 // vertical axis - can be a number or a string indicating unity. eg: '2em'
+              },
+            style: {
+                background: "linear-gradient(to right, #D8261F, #F0635E)",
+              }
+            }).showToast();
     }
     window.location.href = `/cart/${currentCart}`
 }

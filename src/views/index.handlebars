@@ -1,25 +1,24 @@
 <div>
     <h1 class="main-title">Todas las Bebidas</h1>
     
-    <div id="product-list-container">
+    <div class="product-list-container">
         {{#each products}}
             <div class="product-item" id={{_id}} >
                 <p id="item-title">{{title}}</p>
                 <p>{{description}}</p>
                 <p class="price-tag">${{price}}</p>
-                {{#if thumbnails}}
+                {{!-- {{#if thumbnails}} --}}
                     <div class="thumbnail-container">
-                        <img src="../../statics/img/{{thumbnails.[0].originalName}}" alt="">
+                        <img src={{thumbnail}} alt=""> 
                     </div>
-                {{else}}
-                    <p id="no-image">no image</p>
-                {{/if}}
+                {{!-- {{else}}
+                    <p id="no-image">no image</p> "../../statics/img/{{thumbnails.[0].originalName}}"
+                {{/if}} --}}
                 <p class="stock-tag">{{stock}} restantes</p>
                 <button id="add-to-cart-button" onclick="addToCart(event)">Add to cart</button>
             </div>
         {{/each}}
     </div>
-    <button id="see-cart-button" onclick="seeCart(event)">See Cart</button>
 </div>
 
 <script src="/statics/script/index.js"></script>

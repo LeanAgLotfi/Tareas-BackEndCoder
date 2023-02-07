@@ -1,10 +1,13 @@
 
 <h1>Cart</h1>
-<div id="{{cartId}}" class="cart-list">
+<div id="{{cartId}}" class="cart-list product-list-container">
 {{#if products}}
     {{#each products}}
         <div id={{product._id}} class="product-item">
-            <p>{{product.title}}</p>
+            <p id="item-title">{{product.title}}</p>
+             <div class="thumbnail-container">
+                        <img src={{thumbnail}} alt=""> 
+                    </div>
             <p>{{product.price}}</p>
             <p>amount: {{quantity}}</p>
             <button onclick="removeProduct(event)">Remove</button>
