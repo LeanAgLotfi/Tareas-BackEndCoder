@@ -1,6 +1,6 @@
 <div>
     <h1 class="main-title">Todas las Bebidas</h1>
-    <button id="see-cart-button" onclick="seeCart(event)">See Cart</button>
+    
     <div id="product-list-container">
         {{#each products}}
             <div class="product-item" id={{_id}} >
@@ -9,7 +9,7 @@
                 <p class="price-tag">${{price}}</p>
                 {{#if thumbnails}}
                     <div class="thumbnail-container">
-                        <img src="/public/img/{{thumbnails.[0].originalName}}" alt="">
+                        <img src="../../statics/img/{{thumbnails.[0].originalName}}" alt="">
                     </div>
                 {{else}}
                     <p id="no-image">no image</p>
@@ -19,6 +19,7 @@
             </div>
         {{/each}}
     </div>
+    <button id="see-cart-button" onclick="seeCart(event)">See Cart</button>
 </div>
 
 <script src="/statics/script/index.js"></script>
