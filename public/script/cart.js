@@ -1,7 +1,7 @@
 const removeProduct = async (event) =>{
     const productId = event.target.parentNode.getAttribute('id')
     const cartId = event.target.parentNode.parentNode.getAttribute('id')
-    await fetch(`/api/carts/${cartId}/product/${productId}`, {
+    await fetch(`/api/cart/${cartId}/product/${productId}`, {
         method: 'DELETE'
     })
     .then(Toastify({

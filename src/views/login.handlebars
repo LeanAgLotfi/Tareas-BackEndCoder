@@ -1,0 +1,42 @@
+<div class="contenedor-login">
+          <div class="img-login">
+            <img
+              src="https://res.cloudinary.com/dsoa7ssat/image/upload/v1676042959/bebidas/what-does-coca-cola-own_conv_gopsn7.jpg"
+              class="nav-img"
+              alt="..."
+            />
+          </div>
+  <div class="box-login">
+    <form action="/api/sessions" method="post">
+      <div class="container-form">
+        <label for="first_name"><b>First Name</b></label>
+        <input
+          type="text"
+          placeholder="first_name"
+          name="first_name"
+          required
+        />
+
+        <label for="last_name"><b>Last Name</b></label>
+        <input type="text" placeholder="last_name" name="last_name" required />
+
+        <label for="email"><b>Email</b></label>
+        <input type="email" placeholder="email" name="email" required />
+
+        <label for="age"><b>Age</b></label>
+        <input type="date" placeholder="age" name="age" required />
+
+        <label for="password"><b>Password</b></label>
+        <input
+          type="password"
+          placeholder="password"
+          name="password"
+          required
+        />
+      </div>
+        <div class="contenedor-button">
+                  <button type="submit" class="btn login-button">Send</button>
+            </div>
+    </form>
+  </div>
+</div>

@@ -1,0 +1,9 @@
+<div class="container-unauthorized">
+      <h1 class="alerta">User is not authorized to access this content</h1>
+      <button class="btn-alerta" onclick="return redirectToHome()">Volver</button>
+    </div>
+    <script>
+      const redirectToHome = () => {
+        window.location.href = '/login';
+      };
+    </script>

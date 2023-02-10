@@ -1,0 +1,9 @@
+[
+    {
+        "first_name":"Coder",
+        "last_name":"Administrador",
+        "email":"adminCoder@coder.com",
+        "age":  "2000-01-01",
+        "password": "adminCod3r123"
+    }
+]

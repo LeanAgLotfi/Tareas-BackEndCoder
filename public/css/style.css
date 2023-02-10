@@ -20,7 +20,7 @@
 
 /* NAV BAR*/
 body{
-    background-color: #dfdfdf;
+    background-color: #91bde3e6;
 }
 
 .main-title{
@@ -99,3 +99,61 @@ button#add-to-cart-button:hover{
 
 }
 
+.contenedor-login {
+    display: flex;
+    width: auto;
+    height: 90%;
+    margin: 50px;
+    top: 1px;
+    position: absolute;
+}
+
+.img-login {
+    display: flex;
+}
+
+img.nav-img {
+    width: 100%;
+    border-radius: 10px
+}
+
+.box-login {
+    margin-left: 30px;
+    border: 1px solid #2395b7;
+    border-radius: 10px;
+    padding: 10px;
+    background: white;
+}
+
+.contenedor-user {
+    margin: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.cart-user {
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    align-items: center;
+    background: white;
+    width: 600px;
+    height: 650px;
+    padding: 30px;
+    border-radius: 20px;
+}
+
+.cart-user img {
+    border-style: none;
+    border-radius: 100%;
+    width: 200px;
+    border: 1px solid black;
+}
+
+.cart-user h3{
+    text-align: center;
+    border-bottom: 1px solid;
+    margin-top: 50px;
+    color: #555555e1;
+}

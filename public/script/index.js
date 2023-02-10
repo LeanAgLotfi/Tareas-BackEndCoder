@@ -5,12 +5,12 @@ let currentCart;
 
 const addToCart = async (event) =>{
     if(!currentCart){
-        await fetch('/api/cart',{method: 'POST'})
+        await fetch('/cart',{method: 'POST'})
         .then(response => response.json())
         .then(data => currentCart = data.cart._id);
     }
     productId = event.target.parentNode.getAttribute('id')
-    fetch(`/api/cart/${currentCart}/product/${productId}`, {
+    fetch(`/cart/${currentCart}/product/${productId}`, {
         method: 'POST'
     })
     .then(Toastify({
@@ -46,5 +46,5 @@ const seeCart = async (event) =>{
               }
             }).showToast();
     }
-    window.location.href = `/cart/${currentCart}`
+    window.location.href = `/api/cart/${currentCart}`
 }
