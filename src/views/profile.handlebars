@@ -15,4 +15,11 @@
         <h4>tu campo es: {{campo}}</h4>
         <h3>Bienvenido a tu cuenta de CocaCola Company!</h3>
     </div>
+    <span class="btn btn-danger" onclick="return logout()">Logout</span>
 </div>
+
+<script>
+      function logout () {
+      window.location.href = '/api/logout';
+    };
+</script>

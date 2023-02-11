@@ -5,6 +5,8 @@ const CartManagerMongo = require('../../dao/MongoManagers/CartsMongo');
 const auth = require('../../middleware/auth');
 const router = Router()
 const admin = require('../../data/admin.json');
+const session = require('express-session');
+const fs = require('fs');
 const productMongoService = new ProductManagerMongo()
 const cartMongoService = new CartManagerMongo()
 
@@ -94,5 +96,22 @@ router.get('/cart/:cid', async (req, res) => {
     }
 });
 
+
+router.get('/logout', auth, async(req,res)=>{
+    try {
+        req.session.destroy(err => {
+          if (err) {
+            console.log(err);
+          }
+          else {
+            res.clearCookie('user');
+            res.redirect('/api/sessions');
+          }
+        })
+      }
+      catch(err) {
+        console.log(err);
+      }
+})
 
 module.exports = router

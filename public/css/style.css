@@ -130,6 +130,7 @@ img.nav-img {
     display: flex;
     justify-content: center;
     align-items: center;
+    flex-direction: column;
 }
 
 .cart-user {
@@ -156,4 +157,8 @@ img.nav-img {
     border-bottom: 1px solid;
     margin-top: 50px;
     color: #555555e1;
+}
+
+span.btn.btn-danger {
+    margin: 20px;
 }
