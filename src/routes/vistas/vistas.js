@@ -1,56 +1,101 @@
+//Express
 const { Router } = require('express');
-const productModel = require('../../dao/Model/products.model');
+
+//const productModel = require('../../dao/Model/products.model');
+//const auth = require('../../middleware/auth');
+// const session = require('express-session');
+// const fs = require('fs');
+
+//PRODUCT AND CART MANAGER --- admin
 const ProductManagerMongo = require('../../dao/MongoManagers/ProductsMongo');
 const CartManagerMongo = require('../../dao/MongoManagers/CartsMongo');
-const auth = require('../../middleware/auth');
-const router = Router()
 const admin = require('../../data/admin.json');
-const session = require('express-session');
-const fs = require('fs');
+const { sessionMiddleware } = require('../../middleware/session.middleware');
+const { authMiddleware } = require('../../middleware/authorizeRedirect');
+const { passportCustom } = require('../../middleware/passport-custom');
+//PRODUCT AND CART MONGO 
 const productMongoService = new ProductManagerMongo()
 const cartMongoService = new CartManagerMongo()
 
+//ROUTER
+const router = Router()
 
-router.get('/sessions', async(req, res)=>{
-const user = await req.session.user;
 
-     if(user){
-    const products = await productMongoService.getProducts(req.query)
-      return  res.render('index', {
-            title: "Bebidas E-commerce",
-            products: products.docs,
-        })
-  }else{ 
-        return res.render('login', {
-            title:'Registrar Usuario',
-        });
-    }
+//LOGIN--
+router.get('/', (req, res)=>{
+  res.redirect('/login')
 })
- router.post('/sessions', async (req, res)=>{
-    console.log(req.body);
-    const user = req.body; 
-    req.session.user = user;
-    req.session.save((err) => {
-        if (err) console.log("Session Error => ", err);
-        else res.redirect('/api/products');
-      })
- });
 
-router.get('/products', async (req, res) => {
+router.get('/login', 
+    sessionMiddleware,
+    (req, res)=>{
+        res.render('login', {
+            title: 'Login',
+        })
+    }
+)
+
+//REGISTER--
+router.get('/register', 
+    sessionMiddleware,
+    (req, res)=>{
+    res.render('register', {
+        title: 'Registrado!',
+    })
+})
+
+
+
+//SESSION GET--
+// router.get('/sessions', async(req, res)=>{
+// const user = await req.session.user;
+
+//      if(user){
+//     const products = await productMongoService.getProducts(req.query)
+//       return  res.render('index', {
+//             title: "Bebidas E-commerce",
+//             products: products.docs,
+//         })
+//   }else{ 
+//         return res.render('login', {
+//             title:'Registrar Usuario',
+//         });
+//     }
+// });
+
+// //SESSION POST
+// router.post('/sessions', 
+//   async (req, res)=>{
+//     console.log(req.body);
+//     const user = req.body; 
+//     req.session.user = user;
+//     req.session.save((err) => {
+//         if (err) console.log("Session Error => ", err);
+//         else res.redirect('/api/products');
+//       })
+// });
+
+//PRODUCTOS
+router.get('/products', 
+    authMiddleware,
+    passportCustom('jwt'),
+  async (req, res) => {
+    const user = req.user
     try {
         const products = await productMongoService.getProducts(req.query)
         res.render('index', {
             title: "Bebidas E-commerce",
             products: products.docs
         })
-    } catch (error) {
+    }catch (error) {
         res.status(500).send({
             status: "error",
             error: error.message
         })
     }
-})
+});
 
+//PERFIL
 router.get('/profile', auth, async (req, res) => {
     const user = await req.session.user;
     const registrado = admin.find(admin => admin.email === user.email);
@@ -79,12 +124,18 @@ router.get('/profile', auth, async (req, res) => {
     }
 });
 
-router.get('/cart/:cid', async (req, res) => {
-    const cartId = req.params.cid 
+//CARRITO
+router.get('/cart/:cid', 
+  authMiddleware,
+  passportCustom('jwt'),
+async (req, res) => {
+    const cartId = req.params.cid
+    const user = req.user
     try {
         const cart = await cartMongoService.getCartById(cartId)
         res.render('cart', {
             title: "Carrito",
+            user,
             products: cart.products,
             cartId: cart._id
         })
@@ -96,22 +147,36 @@ router.get('/cart/:cid', async (req, res) => {
     }
 });
 
+//CURRENT
+// router.get('/current', 
+//   passportCustom('jwt'),
+//   authorization(USER_ROLES),
+//     async (req,res)=>{
+//     res.json({ payload:req.user });
+//     },
+//   );
 
-router.get('/logout', auth, async(req,res)=>{
-    try {
-        req.session.destroy(err => {
-          if (err) {
-            console.log(err);
-          }
-          else {
-            res.clearCookie('user');
-            res.redirect('/api/sessions');
-          }
-        })
-      }
-      catch(err) {
-        console.log(err);
-      }
-})
+//VIEW UNAUTHORIZED
+router.get("/unauthorized", (req, res) => {
+  res.render("unauthorized");
+});
 
-module.exports = router
+//LOGOUT
+// router.get('/logout', auth, async(req,res)=>{
+//     try {
+//         req.session.destroy(err => {
+//           if (err) {
+//             console.log(err);
+//           }
+//           else {
+//             res.clearCookie('user');
+//             res.redirect('/api/sessions');
+//           }
+//         })
+//       }
+//       catch(err) {
+//         console.log(err);
+//       }
+// });
+
+module.exports = router;

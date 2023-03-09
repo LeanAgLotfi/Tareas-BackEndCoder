@@ -1,16 +1,17 @@
      <nav>
         <div class="nav-wrapper container">
-        <a href="/api/products" class="brand-logo">Bebidas E-commerce</a>
+        <a href="/api/view/products" class="brand-logo">Bebidas E-commerce</a>
         <ul id="nav-lista" class="right hide-on-med-and-down">
-            <li><a href="/api/products">Home</a></li>
+            <li><a href="/api/view/products">Home</a></li>
             <button id="see-cart-button" onclick="seeCart(event)">See Cart</button>
-            <li><a href="/api/profile">Profile</a></li>
+            <li><a href="/api/view/profile">Profile</a></li>
         </ul>
         </div>
     </nav>
 <h1>Cart</h1>
 <div id="{{cartId}}" class="cart-list product-list-container">
 {{#if products}}
+<button onclick="clearCart(event)" class="clear-button waves-effect waves-light btn-large">Clear cart</button>
     {{#each products}}
         <div id={{product._id}} class="product-item">
             <p id="item-title">{{product.title}}</p>

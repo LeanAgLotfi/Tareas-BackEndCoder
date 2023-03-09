@@ -1,0 +1,57 @@
+<div class="contenedor-login">
+          <div class="img-login">
+            <img
+              src="https://res.cloudinary.com/dsoa7ssat/image/upload/v1676042959/bebidas/what-does-coca-cola-own_conv_gopsn7.jpg"
+              class="nav-img"
+              alt="..."
+            />
+          </div>
+  <div class="box-login">
+    <form action="/api/sessions/register" method="post">
+      <div class="container-form">
+        <div>
+          <label for="first_name"><b>First Name</b></label>
+        <input
+          type="text"
+          placeholder="first_name"
+          name="first_name"
+          required
+        />
+        </div>
+
+        <div>
+          <label for="last_name"><b>Last Name</b></label>
+          <input type="text" placeholder="last_name" name="last_name" required />
+        </div>
+
+        <div>
+            <label for="email"><b>Email</b></label>
+            <input type="email" placeholder="email" name="email" required />
+            <span class="helper-text" data-error="Introduce a valid email" data-success="right"></span>
+        </div>
+
+        <div>
+            <label for="age"><b>Age</b></label>
+            <input type="number" placeholder="age" name="age" min="1" max="100" required />
+        </div>
+       
+        <div>
+             <label for="password"><b>Password</b></label>
+          <input
+            type="password"
+            placeholder="password"
+            name="password"
+            required
+            />
+        </div>
+      
+      </div>
+        <div class="contenedor-button">
+                  <button type="submit" class="btn login-button">Send</button>
+            </div>
+          
+    </form>  
+    <h3>Or...</h3>
+        <a href="/login" class="login-anchor">Do You have an account? Log in!</a>
+  </div>
+</div>

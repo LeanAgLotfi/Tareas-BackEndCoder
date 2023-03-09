@@ -11,6 +11,9 @@ const addToCart = async (event) =>{
     }
     productId = event.target.parentNode.getAttribute('id')
     fetch(`/cart/${currentCart}/product/${productId}`, {
+      headers: {
+        'Content-Type': 'application/json'
+    },
         method: 'POST'
     })
     .then(Toastify({
@@ -46,5 +49,5 @@ const seeCart = async (event) =>{
               }
             }).showToast();
     }
-    window.location.href = `/api/cart/${currentCart}`
+    window.location.href = `/api/view/cart/${currentCart}`
 }
