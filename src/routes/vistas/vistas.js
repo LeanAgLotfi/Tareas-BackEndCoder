@@ -12,7 +12,7 @@ const CartManagerMongo = require('../../dao/MongoManagers/CartsMongo');
 const admin = require('../../data/admin.json');
 const { sessionMiddleware } = require('../../middleware/session.middleware');
 const { authMiddleware } = require('../../middleware/authorizeRedirect');
-const { passportCustom } = require('../../middleware/passport-custom');
+const  passportCustom  = require('../../middleware/passport-custom');
 //PRODUCT AND CART MONGO 
 const productMongoService = new ProductManagerMongo()
 const cartMongoService = new CartManagerMongo()
@@ -23,7 +23,7 @@ const router = Router()
 
 //LOGIN--
 router.get('/', (req, res)=>{
-  res.redirect('/login')
+  res.redirect('/api/view/login')
 })
 
 router.get('/login', 
@@ -96,7 +96,7 @@ router.get('/products',
 });
 
 //PERFIL
-router.get('/profile', auth, async (req, res) => {
+router.get('/profile', authMiddleware , async (req, res) => {
     const user = await req.session.user;
     const registrado = admin.find(admin => admin.email === user.email);
     if(registrado){

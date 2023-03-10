@@ -1,31 +1,30 @@
-const { Schema, model } = require('mongoose');
-const { USER_ROLES } = require('../../constants/user.constants');
+const mongoose = require('mongoose')
+const mongoosePaginate = require('mongoose-paginate-v2')
 
 const userCollection = 'users';
 
-const userSchema = new Schema({
-  first_name: { type: String },
-  last_name: { type: String },
+const userSchema = new mongoose.Schema({
+   last_name: { type: String },
   email: { type: String, unique: true },
   age: { type: Number },
   password: { type: String },
   githubLogin: {type:String, unique: true},
   role: {
     type: String,
-    enum: Object.values(USER_ROLES),
+    enum: ['user', 'admin'],
     default: 'user',
     required: true
 },
   cart: [
     {
-      type: Schema.Types.ObjectId,
+      type: mongoose.Schema.Types.ObjectId,
       ref: 'carts'
     }
 ]
     
 });
 
-const UserModel = model(userCollection, userSchema);
+const UserModel = mongoose.model(userCollection, userSchema)
 
 module.exports = {
   UserModel

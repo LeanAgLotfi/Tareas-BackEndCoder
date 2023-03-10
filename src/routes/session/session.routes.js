@@ -2,7 +2,7 @@ const { Router } = require('express');
 
 //PASSPORT STRATEGIS
 const { SessionsController } = require('../../controllers/sessions.controllers');
-const { passportCustom } = require('../../middleware/passport-custom');
+const  passportCustom  = require('../../middleware/passport-custom');
 //const passportGit = require('../../middleware/Oldpassport.middleware');
 //const { authorization } = require('../../middleware/authorization');
 //const { USER_ROLES } = require('../../constants/user.constants');
@@ -13,13 +13,23 @@ const { passportCustom } = require('../../middleware/passport-custom');
 const router = Router()
 
 //LOGIN--
-router.post('/login', SessionsController.login);
+router.post('/login', 
+  SessionsController.login
+)
+
+router.get('/failLogin', (req,res)=>{
+  res.send({error: 'Failed Login'})
+})
 
 //REGISTER--
+
 router.post('/register',
-    passportCustom('register', {failureRedirect: '/api/session/failRegister', failureFlash: true}),
-    (req, res)=>res.redirect('/login')
+  SessionsController.register
 )
+
+router.get('/failRegister', (req,res)=>{
+  res.send({error: 'Failed Login'})
+})
 
 //GIT STRATEGY
 router.get(
@@ -32,6 +42,8 @@ router.get(
   passportCustom('github', { failureRedirect: '/github-error' }),
   SessionsController.loginGithub
 );
+
+router.get('/logout', SessionsController.logout)
 
 //CURRENT
 router.get(

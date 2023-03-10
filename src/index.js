@@ -2,12 +2,12 @@
 const express = require('express');
 const session = require('express-session');
 const handlebars = require('express-handlebars');
+const helpers = require('handlebars-helpers');
 //Path
 const path = require('path');
 //Rutas
 const apiRoutes = require('./routes/Router');
 const viewsRoutes = require('./routes/view.router');
-const realtime = require('./utils/old/realTimeProducts');
 //Server
 const { Server } = require('socket.io');
 //Puerto
@@ -22,25 +22,26 @@ require('./config/dbConfig');
 
 const passport = require('passport');
 const cookieParser = require('cookie-parser');
+const flash = require('connect-flash');
 
 //middlewares
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use('/statics', express.static(path.resolve(__dirname, '../public')));
-app.use(session({
-    name: "user",
-    secret: 'top-secret-51',
-    cookie: {
-      maxAge: 60000 * 60,
-      httpOnly: true,
-    },
-    resave: false,
-    saveUninitialized: false,
-    store: MongoStore.create({
-      mongoUrl: 'mongodb+srv://leli:cRcN_Hae2ZuGw98@ecommerce.oscpr3y.mongodb.net/session?retryWrites=true&w=majority',
-      ttl: 60 * 60
-    })
-  }));
+// app.use(session({
+//     name: "user",
+//     secret: 'top-secret-51',
+//     cookie: {
+//       maxAge: 60000 * 60,
+//       httpOnly: true,
+//     },
+//     resave: false,
+//     saveUninitialized: false,
+//     store: MongoStore.create({
+//       mongoUrl: 'mongodb+srv://leli:cRcN_Hae2ZuGw98@ecommerce.oscpr3y.mongodb.net/session?retryWrites=true&w=majority',
+//       ttl: 60 * 60
+//     })
+//   }));
 
 //Template
 const math = helpers.math();
@@ -51,17 +52,19 @@ app.engine('handlebars', handlebars.engine({
 }));
 app.set('views', __dirname + '/views');
 app.set('view engine', 'handlebars');
-
 app.use(cookieParser());
 app.use(passport.initialize());
-app.use(passport.session());
+app.use(flash())
+// app.use(passport.session());
+
 //routes
-app.use("/api", apiRoutes);
-app.use('/', viewsRoutes);
+app.use("/", apiRoutes);
+app.use('/api', viewsRoutes);
 //app.use('/app', realtime);
 
 
 //Server
+// Listen
 const server = app.listen(PORT, "127.0.0.1", () => {
   const host = server.address().address;
   const port = server.address().port;

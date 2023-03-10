@@ -1,11 +1,11 @@
-const { SESSION_KEY } = require('../constants/session.constants')
+const { SECRET_KEY } = require("../constants/constants");
 
 const authMiddleware = async (req, res, next) => {
   const cookies = req.cookies
-  if (Object.keys(cookies).includes(SESSION_KEY)) {
+  if (Object.keys(cookies).includes(SECRET_KEY)) {
     next();
   } else {
-    res.redirect('/');
+    res.redirect('/api/view/');
   }
 };
 

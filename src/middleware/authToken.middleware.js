@@ -19,7 +19,7 @@ const authToken = (req, res, next)=>{
 const cookieExtractor = req =>{
     let token = null;
     if(req && req.cookies){
-        token = req.cookies['cookieToken']
+        token = req.cookies[SECRET_KEY]
     }
     return token
 }
